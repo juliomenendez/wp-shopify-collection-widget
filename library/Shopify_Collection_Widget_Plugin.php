@@ -11,6 +11,13 @@ if(!class_exists('Shopify_Collection_Widget_Plugin')) {
         {
             add_action('admin_init', array(&$this, 'admin_init'));
             add_action('widgets_init', array(&$this, 'widgets_init'));
+            add_action('init', array($this, 'init'));
+        }
+
+        public function init()
+        {
+            wp_register_style('shopify_collection_widget_styles', SHOPIFY_COLLECTION_WIDGET_URL . 'assets/css/styles.css');
+            wp_enqueue_style('shopify_collection_widget_styles');
         }
 
         public function admin_init()

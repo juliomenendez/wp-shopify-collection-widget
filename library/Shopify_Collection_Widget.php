@@ -1,39 +1,37 @@
 <?php
+require_once(SHOPIFY_COLLECTION_WIDGET_DIR . 'library/Shopify_Api_Client.php');
+
 if(!class_exists('Shopify_Collection_Widget')) {
-    class Shopify_Collection_Widget
+    class Shopify_Collection_Widget extends WP_Widget
     {
-        private $settings_page = 'general';
-        private $settings_section = 'general_options_section';
-
-        public function __construct()
+        private $apiClient;
+        function __construct()
         {
-            add_action('admin_init', array(&$this, 'admin_init'));
+            parent::__construct('shopify_collection_widget', 'Shopify Collection Widget', array('description' => 'A widget to display a collection from Shopify.'));
+
+            $this->apiClient = new Shopify_Api_Client();
         }
 
-        public function admin_init()
+        public function widget($args, $instance)
         {
-            add_settings_section($this->settings_section, 'Shopify Collection Widget Settings', array(&$this, '_admin_settings_section_callback'), $this->settings_page);
-
-            add_settings_field('shopify_api_id', 'API Key', array(&$this, '_admin_settings_api_id_callback'), $this->settings_page, $this->settings_section, array());
-            add_settings_field('shopify_api_secret', 'API Secret', array(&$this, '_admin_settings_api_secret_callback'), $this->settings_page, $this->settings_section, array());
-
-            register_setting('general', 'shopify_api_id');
-            register_setting('general', 'shopify_api_secret');
+            include(sprintf('%s/templates/widget.php', SHOPIFY_COLLECTION_WIDGET_DIR));
         }
 
-        public function _admin_settings_section_callback()
+        public function form($instance)
         {
-            include(sprintf('%s/templates/settings_section.php', SHOPIFY_COLLECTION_WIDGET_DIR));
+            $response = $this->apiClient->get('custom_collections');
+            $collections = $response->custom_collections;
+            $collection_id = $instance['collection_id'];
+            include(sprintf('%s/templates/widget_options.php', SHOPIFY_COLLECTION_WIDGET_DIR));
         }
 
-        public function _admin_settings_api_id_callback($args)
+        public function update($new_instance, $old_instance)
         {
-            include(sprintf('%s/templates/settings_api_id.php', SHOPIFY_COLLECTION_WIDGET_DIR));
-        }
+            $instance = array();
 
-        public function _admin_settings_api_secret_callback($args)
-        {
-            include(sprintf('%s/templates/settings_api_secret.php', SHOPIFY_COLLECTION_WIDGET_DIR));
+            $instance['collection_id'] = $new_instance['collection_id'];
+
+            return $instance;
         }
     }
 }

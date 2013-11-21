@@ -14,6 +14,12 @@ if(!class_exists('Shopify_Collection_Widget')) {
 
         public function widget($args, $instance)
         {
+            $response = $this->apiClient->get('products', array(
+                'collection_id' => $instance['collection_id'],
+                'published_status' => 'published'
+            ));
+            $products = $response->products;
+            $shopUrlFormat = sprintf("https://%s/products/%%s", get_option('shopify_store_url', ''));
             include(sprintf('%s/templates/widget.php', SHOPIFY_COLLECTION_WIDGET_DIR));
         }
 

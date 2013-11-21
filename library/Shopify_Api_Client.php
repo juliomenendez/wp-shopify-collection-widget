@@ -9,18 +9,23 @@ if(!class_exists('Shopify_Api_Client')) {
             $apiKey = get_option('shopify_api_id', '');
             $apiSecret = get_option('shopify_api_secret', '');
             $storeUrl = get_option('shopify_store_url', '');
-            $this->urlPrefix = 'https://' . $apiKey . ':' . $apiSecret . '@' . $storeUrl;
+            $this->urlPrefix = sprintf('https://%s:%s@%s', $apiKey, $apiSecret, $storeUrl);
         }
 
-        public function getUrl($endpoint)
+        public function getUrl($endpoint, $queryData=array())
         {
-            return sprintf('%s/admin/%s.json', $this->urlPrefix, $endpoint);
+            $url = sprintf('%s/admin/%s.json', $this->urlPrefix, $endpoint);
+            $query = http_build_query($queryData);
+            if(strlen($query) > 0) {
+                $url = sprintf('%s?%s', $url, $query);
+            }
+            return $url;
         }
 
-        public function get($endpoint)
+        public function get($endpoint, $queryData)
         {
             $session = curl_init();
-            $url = $this->getUrl($endpoint);
+            $url = $this->getUrl($endpoint, $queryData);
 
             curl_setopt($session, CURLOPT_URL, $url);
             curl_setopt($session, CURLOPT_HTTPGET, 1);
@@ -32,7 +37,8 @@ if(!class_exists('Shopify_Api_Client')) {
             $response = curl_exec($session);
             curl_close($session);
 
-            return json_decode($response);
+            $json = json_decode($response);
+            return $json;
         }
     }
 }

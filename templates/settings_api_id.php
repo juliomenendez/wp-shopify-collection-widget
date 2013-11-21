@@ -1,0 +1,1 @@
+<input type="text" value="<?php echo get_option('shopify_api_id', ''); ?>" name="shopify_api_id" id="shopify_api_id" />

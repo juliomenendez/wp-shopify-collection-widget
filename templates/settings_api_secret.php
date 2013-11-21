@@ -1,0 +1,1 @@
+<input type="text" value="<?php echo get_option('shopify_api_secret', ''); ?>" name="shopify_api_secret" id="shopify_api_secret" />

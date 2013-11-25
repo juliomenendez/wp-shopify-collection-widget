@@ -18,6 +18,9 @@ if(!class_exists('Shopify_Collection_Widget_Plugin')) {
         {
             wp_register_style('shopify_collection_widget_styles', SHOPIFY_COLLECTION_WIDGET_URL . 'assets/css/styles.css');
             wp_enqueue_style('shopify_collection_widget_styles');
+
+            wp_enqueue_script('jquery_flexslider', SHOPIFY_COLLECTION_WIDGET_URL . 'assets/js/jquery.flexslider.min.js', array('jquery'), '1');
+            wp_enqueue_script('shopify_collection_widget_script', SHOPIFY_COLLECTION_WIDGET_URL . 'assets/js/script.js', array('jquery', 'jquery_flexslider'), rand());
         }
 
         public function admin_init()

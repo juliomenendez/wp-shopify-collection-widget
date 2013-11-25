@@ -12,7 +12,5 @@
             <?php endforeach; ?>
             </ul>
         </div>
-        <div class="shopify-collection-widget-controls">
-        </div>
     </div>
 </div>

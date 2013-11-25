@@ -4,7 +4,8 @@
             animation: 'slide',
             selector: '.shopify-collection-widget-slides ul > li',
             maxItems: 1,
-            controlsContainer: $(this).find('.shopify-collection-widget-controls')
+            controlNav: false,
+            directionNav: false
         });
     });
 })(window, jQuery);

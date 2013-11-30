@@ -1,14 +1,14 @@
-.shopfy-collection-widget {
+.shopify-collection-widget {
     overflow: hidden;
 }
 
-.shopfy-collection-widget li {
+.shopify-collection-widget li {
     list-style: none;
     float: left;
     margin: 0;
     padding: 0;
 }
 
-.shopfy-collection-widget li .product img {
+.shopify-collection-widget li .product img {
     width: 240px;
 }

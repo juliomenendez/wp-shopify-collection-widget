@@ -1,6 +1,6 @@
 (function(root, $) {
     $(document).ready(function() {
-        $('.shopfy-collection-widget').flexslider({
+        $('.shopify-collection-widget').flexslider({
             namespace: 'shopify-collection-widget',
             animation: 'slide',
             selector: '.shopify-collection-widget-slides li',

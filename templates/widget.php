@@ -1,4 +1,4 @@
-<div class="shopfy-collection-widget">
+<div class="shopify-collection-widget">
     <div class="shopify-collection-widget-slider-wrapper">
         <div class="shopify-collection-widget-slides">
             <ul>
